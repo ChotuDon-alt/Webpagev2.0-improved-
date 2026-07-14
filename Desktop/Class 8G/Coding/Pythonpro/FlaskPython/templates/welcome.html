@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webpage v2.0 - Welcome Portal</title>
+    <meta name="description" content="Welcome to the Webpage v2.0 Portal. Explore the structure of our template files and access all pages in one place.">
+    <!-- Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #070913;
+            --card-bg: rgba(15, 17, 34, 0.65);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --accent-primary: #6366f1;
+            --accent-secondary: #06b6d4;
+            --accent-purple: #a855f7;
+            --accent-gradient: linear-gradient(135deg, #6366f1 0%, #06b6d4 100%);
+            --accent-gradient-purple: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+            --font-main: 'Outfit', sans-serif;
+            --font-sub: 'Plus Jakarta Sans', sans-serif;
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.18) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.18) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(168, 85, 247, 0.08) 0px, transparent 60%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 2.5rem 1.5rem;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Ambient background glow */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 15%;
+            left: 5%;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.15);
+            filter: blur(120px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            bottom: 15%;
+            right: 5%;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: rgba(6, 182, 212, 0.15);
+            filter: blur(130px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            display: flex;
+            background: rgba(15, 17, 34, 0.5);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 0.5rem;
+            margin-bottom: 2.5rem;
+            width: 100%;
+            max-width: 800px;
+            justify-content: space-around;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+
+        .nav-link {
+            font-family: var(--font-sub);
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.8rem 1.1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 14px;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-link svg {
+            transition: transform 0.3s ease;
+            stroke-width: 2.2px;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .nav-link:hover svg {
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            color: #ffffff;
+            background: var(--accent-gradient-purple);
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.25);
+        }
+
+        /* Content Container */
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--card-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--card-border);
+            border-radius: 28px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero Header Section */
+        .hero-section {
+            text-align: center;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 2rem;
+        }
+
+        .welcome-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            color: #c084fc;
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 750;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff 20%, #c084fc 60%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .welcome-desc {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Template Directory Grid */
+        .directory-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .directory-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .directory-count {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            padding: 0.2rem 0.75rem;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .template-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .template-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .template-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent-gradient);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .template-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(99, 102, 241, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+        }
+
+        .template-card:hover::before {
+            opacity: 1;
+        }
+
+        .template-info-wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            flex: 1;
+        }
+
+        .template-icon {
+            color: var(--accent-primary);
+            background: rgba(99, 102, 241, 0.08);
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: var(--transition-smooth);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+        }
+
+        .template-card:hover .template-icon {
+            color: #ffffff;
+            background: var(--accent-gradient);
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .template-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .template-title-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .template-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .file-badge {
+            font-family: monospace;
+            font-size: 0.75rem;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--card-border);
+            padding: 0.15rem 0.5rem;
+            border-radius: 6px;
+            color: var(--text-secondary);
+        }
+
+        .route-badge {
+            font-family: monospace;
+            font-size: 0.75rem;
+            background: rgba(6, 182, 212, 0.08);
+            border: 1px solid rgba(6, 182, 212, 0.18);
+            padding: 0.15rem 0.5rem;
+            border-radius: 6px;
+            color: var(--accent-secondary);
+            font-weight: 600;
+        }
+
+        .template-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .btn-view {
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            color: #ffffff;
+            padding: 0.75rem 1.25rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition-smooth);
+            white-space: nowrap;
+        }
+
+        .template-card:hover .btn-view {
+            background: #ffffff;
+            color: #070913;
+            border-color: #ffffff;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.25);
+        }
+
+        .btn-view svg {
+            transition: transform 0.3s ease;
+        }
+
+        .template-card:hover .btn-view svg {
+            transform: translateX(3px);
+        }
+
+        /* Stats overview cards */
+        .stats-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            transition: var(--transition-smooth);
+        }
+
+        .stat-box:hover {
+            background: rgba(255, 255, 255, 0.02);
+            border-color: rgba(168, 85, 247, 0.2);
+        }
+
+        .stat-box-title {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .stat-box-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .stat-highlight {
+            background: linear-gradient(135deg, #a855f7, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Footer */
+        .footer-note {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--card-border);
+            padding-top: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .footer-note a {
+            color: var(--accent-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+        }
+
+        .footer-note a:hover {
+            color: var(--accent-primary);
+            text-decoration: underline;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 700px) {
+            body {
+                padding: 1.5rem 1rem;
+            }
+            .navbar {
+                flex-direction: column;
+                gap: 0.25rem;
+                padding: 0.5rem;
+                border-radius: 18px;
+            }
+            .nav-link {
+                width: 100%;
+                justify-content: flex-start;
+                padding: 0.6rem 1rem;
+            }
+            .container {
+                padding: 2rem 1.5rem;
+                gap: 2rem;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .template-card {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1.25rem;
+                padding: 1.25rem;
+            }
+            .btn-view {
+                justify-content: center;
+                width: 100%;
+            }
+            .stats-summary {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar" id="main-navigation">
+            <a href="/" id="nav-welcome" class="nav-link active">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+                Welcome Portal
+            </a>
+            <a href="/home" id="nav-home" class="nav-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                Home Page
+            </a>
+            <a href="/about" id="nav-about" class="nav-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                About Us
+            </a>
+            <a href="/contact" id="nav-contact" class="nav-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                Contact
+            </a>
+            <a href="/persdet" id="nav-persdet" class="nav-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Personal Details
+            </a>
+            <a href="/follow" id="nav-follow" class="nav-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Feedback
+            </a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Hero Header -->
+        <section class="hero-section" id="portal-hero">
+            <div class="welcome-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                Developer Hub
+            </div>
+            <h1 id="main-heading">Webpage v2.0 Portal</h1>
+            <p class="welcome-desc">A structured directory map of all template modules powering our Flask Web Application. Browse files, routes, and jump directly to pages.</p>
+        </section>
+
+        <!-- Stats boxes -->
+        <section class="stats-summary" id="portal-stats">
+            <div class="stat-box">
+                <span class="stat-box-title">Total Modules</span>
+                <span class="stat-box-value stat-highlight">5 Templates</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-box-title">Framework Platform</span>
+                <span class="stat-box-value">Flask / Python</span>
+            </div>
+        </section>
+
+        <!-- Template Directory Structure -->
+        <section id="portal-directory">
+            <div class="directory-header">
+                <h2 class="directory-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                    Template Files Directory
+                </h2>
+                <span class="directory-count">5 Files Listed</span>
+            </div>
+
+            <div class="template-grid">
+                <!-- Card 1: home.html -->
+                <div class="template-card" id="card-home-info">
+                    <div class="template-info-wrapper">
+                        <div class="template-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                        </div>
+                        <div class="template-details">
+                            <div class="template-title-bar">
+                                <span class="template-name">Home Page</span>
+                                <span class="file-badge">home.html</span>
+                                <span class="route-badge">/home</span>
+                            </div>
+                            <p class="template-desc">The central hub of Webpage v2.0. Contains quick links, navigation items, introductory information, and inspirational quotes.</p>
+                        </div>
+                    </div>
+                    <a href="/home" id="btn-home-link" class="btn-view">
+                        View Page
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
+                </div>
+
+                <!-- Card 2: about.html -->
+                <div class="template-card" id="card-about-info">
+                    <div class="template-info-wrapper">
+                        <div class="template-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                        </div>
+                        <div class="template-details">
+                            <div class="template-title-bar">
+                                <span class="template-name">About Us</span>
+                                <span class="file-badge">about.html</span>
+                                <span class="route-badge">/about</span>
+                            </div>
+                            <p class="template-desc">Dedicated profile segment showcasing team and owner info (Aurafic Man), specific details on key hobbies, school terms, and cricket/coding interests.</p>
+                        </div>
+                    </div>
+                    <a href="/about" id="btn-about-link" class="btn-view">
+                        View Page
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
+                </div>
+
+                <!-- Card 3: persdet.html -->
+                <div class="template-card" id="card-persdet-info">
+                    <div class="template-info-wrapper">
+                        <div class="template-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        </div>
+                        <div class="template-details">
+                            <div class="template-title-bar">
+                                <span class="template-name">Personal Details</span>
+                                <span class="file-badge">persdet.html</span>
+                                <span class="route-badge">/persdet</span>
+                            </div>
+                            <p class="template-desc">Technical resume section featuring progress bars for HTML, Python, and Batch/Bash competencies, list of active hobbies, and structural notices.</p>
+                        </div>
+                    </div>
+                    <a href="/persdet" id="btn-persdet-link" class="btn-view">
+                        View Page
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
+                </div>
+
+                <!-- Card 4: contact.html -->
+                <div class="template-card" id="card-contact-info">
+                    <div class="template-info-wrapper">
+                        <div class="template-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        </div>
+                        <div class="template-details">
+                            <div class="template-title-bar">
+                                <span class="template-name">Contact Details</span>
+                                <span class="file-badge">contact.html</span>
+                                <span class="route-badge">/contact</span>
+                            </div>
+                            <p class="template-desc">Official contact information interface. Connects phone numbers (tel: links) and email addresses directly to communication devices.</p>
+                        </div>
+                    </div>
+                    <a href="/contact" id="btn-contact-link" class="btn-view">
+                        View Page
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
+                </div>
+
+                <!-- Card 5: follow.html -->
+                <div class="template-card" id="card-follow-info">
+                    <div class="template-info-wrapper">
+                        <div class="template-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        </div>
+                        <div class="template-details">
+                            <div class="template-title-bar">
+                                <span class="template-name">Give Feedback</span>
+                                <span class="file-badge">follow.html</span>
+                                <span class="route-badge">/follow</span>
+                            </div>
+                            <p class="template-desc">User response interface providing a feedback form. Sends custom email entries directly to support addresses with styled inputs.</p>
+                        </div>
+                    </div>
+                    <a href="/follow" id="btn-follow-link" class="btn-view">
+                        View Page
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer-note" id="portal-footer">
+            Flask v2.0 Application structure. Maintained by <a href="mailto:chotabheem45@reddit.com" id="footer-email-link">chotabheem45@reddit.com</a>.
+        </footer>
+    </main>
+</body>
+</html>
